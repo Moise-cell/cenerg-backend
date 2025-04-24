@@ -1,13 +1,11 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import os
-from pathlib import Path
 from psycopg2 import pool
 from dotenv import load_dotenv
 
 # Charger les variables d'environnement depuis la racine du projet
-basedir = Path(__file__).resolve().parent.parent
-load_dotenv(basedir / '.env')
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
@@ -35,6 +33,9 @@ db_pool = pool.SimpleConnectionPool(
 
 def get_db_connection():
     return db_pool.getconn()
+
+def release_db_connection(conn):
+    db_pool.putconn(conn)
 
 @app.route('/')
 @app.route('/health')
@@ -73,7 +74,7 @@ def get_phones():
             }
         
         cur.close()
-        db_pool.putconn(conn)
+        release_db_connection(conn)
         
         return jsonify(phones)
     
@@ -100,7 +101,7 @@ def get_house_energy(house_id):
             }
         
         cur.close()
-        db_pool.putconn(conn)
+        release_db_connection(conn)
         
         return jsonify(energy)
     
@@ -141,7 +142,7 @@ def update_house_energy(house_id):
             }
         
         cur.close()
-        db_pool.putconn(conn)
+        release_db_connection(conn)
         
         return jsonify(energy)
     
