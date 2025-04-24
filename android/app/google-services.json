@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "508891898609",
+    "project_id": "cenerg-ac886",
+    "storage_bucket": "cenerg-ac886.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:508891898609:android:faa014378c62b79cb43f50",
+        "android_client_info": {
+          "package_name": "com.example.cenerg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbSapKgCNEDAR4_jC1XfAsi6WOlmRMsm0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
