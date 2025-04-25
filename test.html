@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test API CenErg</title>
+</head>
+<body>
+    <h1>Test API CenErg</h1>
+    <button onclick="testAPI()">Tester l'API</button>
+    <pre id="result"></pre>
+
+    <script>
+        function testAPI() {
+            fetch('http://localhost:5000/test')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    document.getElementById('result').textContent = 'Erreur: ' + error;
+                });
+        }
+    </script>
+</body>
+</html>

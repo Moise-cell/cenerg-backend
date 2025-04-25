@@ -1,0 +1,2 @@
+F:/cenerg/android/app/.cxx/Debug/1f311d61/x86_64/CMakeFiles/edit_cache.dir
+F:/cenerg/android/app/.cxx/Debug/1f311d61/x86_64/CMakeFiles/rebuild_cache.dir
