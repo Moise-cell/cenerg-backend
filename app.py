@@ -177,17 +177,24 @@ def update_house_energy(house_id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+logging.basicConfig(level=logging.DEBUG)
+
 @app.route('/api/login', methods=['POST'])
 def login():
+    logging.debug("Login endpoint called")
     data = request.get_json(silent=True)
+    logging.debug(f"Payload received: {data}")
     if data is None:
+        logging.debug("No JSON payload, returning 400")
         return jsonify({'error': 'Requête JSON attendue'}), 400
     username = data.get('username')
     password = data.get('password')
     if not username or not password:
         return jsonify({'error': 'username et password requis'}), 400
     conn = get_db_connection()
+    logging.debug(f"DB connection object: {conn}")
     if not conn:
+        logging.error("DB connection failed")
         return jsonify({'error': 'Erreur de connexion à la base de données'}), 500
     cur = conn.cursor()
     cur.execute(
@@ -196,9 +203,11 @@ def login():
     )
     user = cur.fetchone()
     if not user:
+        logging.debug(f"User not found: {username}")
         return jsonify({'success': False}), 401
     if isinstance(user, dict):
         return jsonify({'success': True, 'user': user})
+    logging.debug(f"Login successful for user: {username}")
     return jsonify({
         'success': True,
         'user': {
