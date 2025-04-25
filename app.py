@@ -226,5 +226,5 @@ def get_houses():
     return jsonify(result)
 
 if __name__ == '__main__':
-    print('Starting CenErg API server...')
+    # Debug entrypoint: run with Python for full error traceback
     app.run(host='0.0.0.0', port=int(os.getenv('API_PORT', 5000)), debug=True)

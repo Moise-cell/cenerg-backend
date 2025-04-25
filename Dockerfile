@@ -17,5 +17,5 @@ COPY . /app
 # Expose port (default to 5000)
 EXPOSE 5000
 
-# Start the Gunicorn server
-CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:5000"]
+# Start the python server
+CMD ["python", "app.py"]
