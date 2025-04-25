@@ -231,12 +231,21 @@ def get_houses():
         return jsonify({'error': 'Failed to get database connection'}), 500
     cur = conn.cursor()
     cur.execute(
-        'SELECT id, name, address, user_count, daily_energy '
+        'SELECT id, name, address, energy_balance '
         'FROM houses ORDER BY id LIMIT %s OFFSET %s',
         (per_page, (page-1)*per_page)
     )
-    result = cur.fetchall()
-    return jsonify(result)
+    rows = cur.fetchall()
+    # Map rows to dicts
+    houses = []
+    for r in rows:
+        houses.append({
+            'id': str(r[0]),
+            'name': r[1],
+            'address': r[2],
+            'energy_balance': float(r[3])
+        })
+    return jsonify(houses)
 
 if __name__ == '__main__':
     # Debug entrypoint: run with Python for full error traceback
