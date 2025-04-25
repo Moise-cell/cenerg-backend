@@ -1,2 +1,0 @@
-C:/Users/Moise MB/Documents/2/cenerg/android/app/.cxx/RelWithDebInfo/2522y2k1/armeabi-v7a/CMakeFiles/edit_cache.dir
-C:/Users/Moise MB/Documents/2/cenerg/android/app/.cxx/RelWithDebInfo/2522y2k1/armeabi-v7a/CMakeFiles/rebuild_cache.dir
