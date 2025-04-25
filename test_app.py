@@ -1,6 +1,6 @@
 import json
 import pytest
-from server.app import app, get_db_connection, release_db_connection
+from app import app, get_db_connection, release_db_connection
 
 class DummyCursor:
     def __init__(self, results):
@@ -20,7 +20,7 @@ class DummyConnection:
 @pytest.fixture(autouse=True)
 def disable_db_pool(monkeypatch):
     # Prevent real DB pool interactions
-    monkeypatch.setattr('server.app.release_db_connection', lambda conn: None)
+    monkeypatch.setattr('app.release_db_connection', lambda conn: None)
 
 @pytest.fixture
 def client():
@@ -45,7 +45,7 @@ def test_login_missing_fields(client):
 
 
 def test_login_db_error(monkeypatch, client):
-    monkeypatch.setattr('server.app.get_db_connection', lambda: None)
+    monkeypatch.setattr('app.get_db_connection', lambda: None)
     resp = client.post('/api/login', json={'username':'u','password':'p'})
     assert resp.status_code == 500
     data = resp.get_json()
@@ -54,7 +54,7 @@ def test_login_db_error(monkeypatch, client):
 
 def test_login_invalid_credentials(monkeypatch, client):
     # Simulate no user found
-    monkeypatch.setattr('server.app.get_db_connection', lambda: DummyConnection([None]))
+    monkeypatch.setattr('app.get_db_connection', lambda: DummyConnection([None]))
     resp = client.post('/api/login', json={'username':'u','password':'p'})
     assert resp.status_code == 401
     data = resp.get_json()
@@ -64,7 +64,7 @@ def test_login_invalid_credentials(monkeypatch, client):
 def test_login_success(monkeypatch, client):
     # Simulate valid user
     user = {'username':'u','password_hash':'p','user_type':'autre','phone':'123'}
-    monkeypatch.setattr('server.app.get_db_connection', lambda: DummyConnection([user]))
+    monkeypatch.setattr('app.get_db_connection', lambda: DummyConnection([user]))
     resp = client.post('/api/login', json={'username':'u','password':'p'})
     assert resp.status_code == 200
     data = resp.get_json()
@@ -75,7 +75,7 @@ def test_login_success(monkeypatch, client):
 
 def test_get_houses_pagination(monkeypatch, client):
     houses = [{'id':1,'name':'h1','address':'a','user_count':1,'daily_energy':10}]
-    monkeypatch.setattr('server.app.get_db_connection', lambda: DummyConnection([houses]))
+    monkeypatch.setattr('app.get_db_connection', lambda: DummyConnection([houses]))
     resp = client.get('/api/houses?page=1&per_page=1')
     assert resp.status_code == 200
     data = resp.get_json()
