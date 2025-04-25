@@ -199,7 +199,7 @@ def login():
             return jsonify({'error': 'Erreur de connexion à la base de données'}), 500
         cur = conn.cursor()
         cur.execute(
-            'SELECT username, password_hash, user_type, phone FROM users WHERE username = %s',
+            'SELECT username, password_hash, role, phone_number FROM users WHERE username = %s',
             (username,)
         )
         user = cur.fetchone()
@@ -214,8 +214,8 @@ def login():
             'user': {
                 'username': user[0],
                 'password_hash': user[1],
-                'user_type': user[2],
-                'phone': user[3]
+                'role': user[2],
+                'phone_number': user[3]
             }
         })
     except Exception as e:
